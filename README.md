@@ -1,1 +1,2 @@
 # Remotify
+Control music playback.
