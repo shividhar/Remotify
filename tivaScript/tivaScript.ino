@@ -6,23 +6,20 @@
 #include <OrbitOledChar.h>
 #include <OrbitOledGrph.h>
 
-
-#define LED RED_LED
 boolean stringComplete = false;
 char inputText[100];
+
 void setup() {
-  // put your setup code here, to run once:
   OrbitOledInit();
   OrbitOledClear();
   OrbitOledClearBuffer();
   OrbitOledSetDrawMode(modOledSet);
   Serial.begin(9600);
-  Serial.flush();
-  pinMode(LED, OUTPUT);   
+  Serial.flush();   
 }
 
 void loop() {
-  Serial.println("0");
+  Serial.println("shuffle");
   if(stringComplete){
     OrbitOledClear();
     OrbitOledClearBuffer();
@@ -32,6 +29,7 @@ void loop() {
     memset(inputText,0,100);
     stringComplete = false;
   }
+  delay(2000);
 }
 
 void serialEvent() {
