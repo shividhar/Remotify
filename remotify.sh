@@ -51,5 +51,5 @@ while true
 #        echo $currentArtist > /dev/cu.usbmodem0E2198D1
 #        echo $currentAlbum > /dev/cu.usbmodem0E2198D1
 #        echo $playerPos > /dev/cu.usbmodem0E2198D1
-        sleep 1
+#        sleep 1
 done
