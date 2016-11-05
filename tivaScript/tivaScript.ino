@@ -6,10 +6,17 @@
 #include <OrbitOledChar.h>
 #include <OrbitOledGrph.h>
 
+void switchInitialize();
+void repeatToggle();
+void muteToggle();
+
 boolean stringComplete = false;
 char inputText[100];
 
 void setup() {
+  
+  switchInitialize();
+  
   OrbitOledInit();
   OrbitOledClear();
   OrbitOledClearBuffer();
@@ -19,7 +26,8 @@ void setup() {
 }
 
 void loop() {
-  Serial.println("shuffle");
+  repeatToggle();
+  muteToggle();
   if(stringComplete){
     OrbitOledClear();
     OrbitOledClearBuffer();
@@ -29,7 +37,6 @@ void loop() {
     memset(inputText,0,100);
     stringComplete = false;
   }
-  delay(2000);
 }
 
 void serialEvent() {
