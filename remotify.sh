@@ -22,25 +22,17 @@ while true
 		 		fi
 		 		;;
 		 
-		 	repeat)
-		 		repeatState="$(osascript -e 'tell application "iTunes" to song repeat')"
-		 		if [ $repeatState = "all" ]
-		 		then
-		 		osascript -e 'tell application "iTunes" to set song repeat to off'
-		 		else
-		 		osascript -e 'tell application "iTunes" to set song repeat to all'
-		 		fi
-		 		;;
-			 
-		 	mute)
-		 		muteState="$(osascript -e 'output muted of (get volume settings)')"
-		 		if [ $muteState = "false" ]
-		 		then
-		 		osascript -e 'set volume output muted true'
-		 		else
-		 		osascript -e 'set volume output muted false'
-		 		fi
-		 		;;
+		 	repeatOn)
+                osascript -e 'tell application "iTunes" to set song repeat to all';;
+
+            repeatOff)
+                osascript -e 'tell application "iTunes" to set song repeat to off';;
+
+            muteOn)
+                osascript -e 'set volume output muted true';;
+
+            muteOff)
+		 		osascript -e 'set volume output muted false';;
 
 		 esac
 #       currentSong="$(osascript -e 'tell application "iTunes" to name of current track')"
