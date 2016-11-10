@@ -8,19 +8,19 @@ void switchInitialize()
 {
   for(int i=0;i<switchCount;i++)
     pinMode(switches[i], INPUT);
-    switchState[0]=digitalRead(switches[0]);
-    switchState[1]=digitalRead(switches[1]);
-    muteInitialize();
-    repeatInitialize();
+  switchState[0]=digitalRead(switches[0]);
+  switchState[1]=digitalRead(switches[1]);
+  repeatInitialize();
+  muteInitialize();
 }
 
 void repeatInitialize()
 {
   if(switchState[0])
-      Serial.println("repeatOn");
+      Serial.println(3); //repeatOn
   else
-      Serial.println("repeatOff");
-  delay(10);
+      Serial.println(4); //repeatOff
+  delay(delayTime*3);
 }
 
 void repeatSwitch()
@@ -29,20 +29,20 @@ void repeatSwitch()
   {
     switchState[0]=digitalRead(switches[0]);
     if(switchState[0])
-      Serial.println("repeatOn");
+      Serial.println(3); //repeatOn
     else
-      Serial.println("repeatOff");
+      Serial.println(4); //repeatOff
   }
-  delay(10);
+  delay(delayTime);
 }
 
 void muteInitialize()
 {
   if(switchState[1])
-      Serial.println("muteOn");
+      Serial.println(5); //muteOn
   else
-      Serial.println("muteOff");
-  delay(10);
+      Serial.println(6); //muteOff
+  delay(delayTime);
 }
 
 void muteSwitch()
@@ -51,10 +51,10 @@ void muteSwitch()
   {
     switchState[1]=digitalRead(switches[1]);
     if(switchState[1])
-      Serial.println("muteOn");
+      Serial.println(5); //muteOn
     else
-      Serial.println("muteOff");
+      Serial.println(6); //muteOff
   }
-  delay(10);
+  delay(delayTime);
 }
 
