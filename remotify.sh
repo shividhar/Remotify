@@ -3,43 +3,51 @@ while true
         do
          read -e STR < /dev/cu.usbmodem0E2198D1
          case "$STR" in
-		 	playpause)
+#           playpause toggle
+		 	0)
 		 		osascript -e 'tell application "iTunes" to playpause';;
-			 
-		 	next)
+
+#           next track
+		 	1)
 		 		osascript -e 'tell application "iTunes" to play next track';;
-			 
-		 	previous)
+
+#           previous track
+		 	2)
 		 		osascript -e 'tell application "iTunes" to play previous track';;
-			 
-		 	shuffle)
-		 		shuffleState="$(osascript -e 'tell application "iTunes" to shuffle enabled')"
-		 		if [ $shuffleState = "true" ]
-		 		then
-		 		    osascript -e 'tell application "iTunes" to set shuffle enabled to false'
-		 		else
-		 		    osascript -e 'tell application "iTunes" to set shuffle enabled to true'
-		 		fi
-		 		;;
-		 
-		 	repeatOn)
+
+#           turn repeat on
+		 	3)
                 osascript -e 'tell application "iTunes" to set song repeat to all';;
 
-            repeatOff)
+#           turn repeat off
+            4)
                 osascript -e 'tell application "iTunes" to set song repeat to off';;
 
-            muteOn)
+#           mute
+            5)
                 osascript -e 'set volume output muted true';;
 
-            muteOff)
+#           unmute
+            6)
 		 		osascript -e 'set volume output muted false';;
 
+#           shuffle
+            shuffle)
+            shuffleState="$(osascript -e 'tell application "iTunes" to shuffle enabled')"
+            if [ $shuffleState = "true" ]
+            then
+                osascript -e 'tell application "iTunes" to set shuffle enabled to false'
+            else
+                osascript -e 'tell application "iTunes" to set shuffle enabled to true'
+            fi
+            ;;
+
 		 esac
-#       currentSong="$(osascript -e 'tell application "iTunes" to name of current track')"
+       currentSong="$(osascript -e 'tell application "iTunes" to name of current track')"
 #       currentArtist="$(osascript -e 'tell application "iTunes" to album of current track')"
 #       currentAlbum="$(osascript -e 'tell application "iTunes" to artist of current track')"
 #		playerPos="$(osascript -e 'tell application "iTunes" to player position')"
-#        echo $currentSong > /dev/cu.usbmodem0E2198D1
+        echo $currentSong > /dev/cu.usbmodem0E2198D1
 #        echo $currentArtist > /dev/cu.usbmodem0E2198D1
 #        echo $currentAlbum > /dev/cu.usbmodem0E2198D1
 #        echo $playerPos > /dev/cu.usbmodem0E2198D1
