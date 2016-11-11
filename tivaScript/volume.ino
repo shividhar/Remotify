@@ -18,6 +18,8 @@ void volume()
   if(ulAIN0/40!=previousVolume)
   {
     Serial.print("v");
+    //max potentiometer val is 4095, 4095/40=102
+    //itunes interprets as 100, spotify breaks lololol
     Serial.println(ulAIN0/40);
     previousVolume=ulAIN0/40;
   }

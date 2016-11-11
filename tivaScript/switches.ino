@@ -8,6 +8,7 @@ void switchInitialize()
 {
   for(int i=0;i<switchCount;i++)
     pinMode(switches[i], INPUT);
+  //set starting states as incorrect, forces first run to correct switch vs. computer inconsistencies
   switchState[0]=!digitalRead(switches[0]);
   switchState[1]=!digitalRead(switches[1]);
 }

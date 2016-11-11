@@ -18,11 +18,11 @@ while true
 
 #           turn repeat on
 				 	3)
-		                osascript -e 'tell application "Spotify" to set song repeat to all';;
+		                osascript -e 'tell application "Spotify" to set repeating to true';;
 
 #           turn repeat off
 		            4)
-		                osascript -e 'tell application "Spotify" to set song repeat to off';;
+		                osascript -e 'tell application "Spotify" to set repeating to false';;
 
 #           mute
 		            5)
@@ -92,11 +92,11 @@ while true
 #                        ;;
 				esac
 	        fi
-        currentSong="$(osascript -e 'tell application "iTunes" to name of current track')"
+#       currentSong="$(osascript -e 'tell application "iTunes" to name of current track')"
 #       currentArtist="$(osascript -e 'tell application "iTunes" to album of current track')"
 #       currentAlbum="$(osascript -e 'tell application "iTunes" to artist of current track')"
 #		playerPos="$(osascript -e 'tell application "iTunes" to player position')"
-        echo $currentSong > /dev/cu.usbmodem0E2198D1
+#       echo $currentSong > /dev/cu.usbmodem0E2198D1
 #       echo $currentArtist > /dev/cu.usbmodem0E2198D1
 #       echo $currentAlbum > /dev/cu.usbmodem0E2198D1
 #       echo $playerPos > /dev/cu.usbmodem0E2198D1
