@@ -6,12 +6,13 @@
 #include <OrbitOledChar.h>
 #include <OrbitOledGrph.h>
 
-#define delayTime 100
-boolean stringComplete = false;
+int delayTime=300;
 char inputText[100];
 
-void setup() {
+void setup()
+{
   Serial.begin(9600);
+  volumeInitialize();
   switchInitialize();
   buttonInitialize();
 
@@ -24,27 +25,32 @@ void setup() {
 }
 
 void loop() {
+
   repeatSwitch();
+  volume();
   muteSwitch();
   playpauseButton();
   nextButton();
-
-  if(stringComplete){
+  
+  if(serialEvent())
+  {
     OrbitOledClear();
     OrbitOledClearBuffer();
     OrbitOledMoveTo(0, 0);
     OrbitOledDrawString(inputText);
     OrbitOledUpdate();
     memset(inputText,0,100);
-    stringComplete=false;
   }
+  
   Serial.println(9); //do nothing
-  delay(delayTime);
+  delay(delayTime*2);
+  delayTime=50;
 }
 
-void serialEvent() {
+bool serialEvent()
+{
   while (Serial.available()) {
     Serial.readBytesUntil('\n',inputText, 1000);
-    stringComplete = true;
+    return true;
   }
 }

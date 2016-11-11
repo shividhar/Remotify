@@ -1,5 +1,5 @@
-const int bottomButton=PD_2;
-const int topButton=PE_0;
+uint32_t bottomButton=PD_2;
+uint32_t topButton=PE_0;
 const int buttonCount=2;
 const int buttons[buttonCount]={topButton, bottomButton};
 

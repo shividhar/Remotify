@@ -2,9 +2,8 @@
 while true  
         do
         	read -e STR < /dev/cu.usbmodem0E2198D1
-        	osascript -e 'tell application "Spotify" to playpause'
         	if pgrep -x 'Spotify' &> /dev/null; then
-	         	case "$STR" in
+	         	case "${STR:0:1}" in
 #           playpause toggle
 				 	0)
 				 		osascript -e 'tell application "Spotify" to playpause';;
@@ -32,19 +31,23 @@ while true
 		            6)
 				 		osascript -e 'set volume output muted false';;
 
-                    shuffle)
-                    shuffleState="$(osascript -e 'tell application "Spotify" to shuffle enabled')"
-                    if [ $shuffleState = "true" ]
-                    then
-                        osascript -e 'tell application "Spotify" to set shuffle enabled to false'
-                    else
-                        osascript -e 'tell application "Spotify" to set shuffle enabled to true'
-                    fi
-                    ;;
+                    v)
+                        vol=${STR:1:1}${STR:2:1}${STR:3:1}
+                        osascript -e 'tell application "Spotify" to set sound volume to '$vol''
+
+#                    shuffle)
+#                    shuffleState="$(osascript -e 'tell application "Spotify" to shuffle enabled')"
+#                    if [ $shuffleState = "true" ]
+#                    then
+#                        osascript -e 'tell application "Spotify" to set shuffle enabled to false'
+#                    else
+#                        osascript -e 'tell application "Spotify" to set shuffle enabled to true'
+#                    fi
+#                    ;;
 
 				esac
 	        elif pgrep -x 'iTunes'  &> /dev/null; then
-	         	case "$STR" in
+	         	case "${STR:0:1}" in
 #           playpause toggle
                     0)
                         osascript -e 'tell application "iTunes" to playpause';;
@@ -73,23 +76,27 @@ while true
                     6)
                         osascript -e 'set volume output muted false';;
 
+                    v)
+                        vol=${STR:1:1}${STR:2:1}${STR:3:1}
+                        osascript -e 'tell application "iTunes" to set sound volume to '$vol''
+
 #           shuffle
-                    shuffle)
-                        shuffleState="$(osascript -e 'tell application "iTunes" to shuffle enabled')"
-                        if [ $shuffleState = "true" ]
-                        then
-                            osascript -e 'tell application "iTunes" to set shuffle enabled to false'
-                        else
-                            osascript -e 'tell application "iTunes" to set shuffle enabled to true'
-                        fi
-                        ;;
+#                    shuffle)
+#                        shuffleState="$(osascript -e 'tell application "iTunes" to shuffle enabled')"
+#                        if [ $shuffleState = "true" ]
+#                        then
+#                            osascript -e 'tell application "iTunes" to set shuffle enabled to false'
+#                        else
+#                            osascript -e 'tell application "iTunes" to set shuffle enabled to true'
+#                        fi
+#                        ;;
 				esac
 	        fi
         currentSong="$(osascript -e 'tell application "iTunes" to name of current track')"
 #       currentArtist="$(osascript -e 'tell application "iTunes" to album of current track')"
 #       currentAlbum="$(osascript -e 'tell application "iTunes" to artist of current track')"
 #		playerPos="$(osascript -e 'tell application "iTunes" to player position')"
-#       echo $currentSong > /dev/cu.usbmodem0E2198D1
+        echo $currentSong > /dev/cu.usbmodem0E2198D1
 #       echo $currentArtist > /dev/cu.usbmodem0E2198D1
 #       echo $currentAlbum > /dev/cu.usbmodem0E2198D1
 #       echo $playerPos > /dev/cu.usbmodem0E2198D1
