@@ -2,7 +2,6 @@
 while true  
         do
         	read -e STR < /dev/cu.usbmodem0E2198D1
-        	osascript -e 'tell application "Spotify" to playpause'
         	if pgrep -x 'Spotify' &> /dev/null; then
 	         	case "$STR" in
 				 	playpause)
@@ -71,7 +70,7 @@ while true
 				 		osascript -e 'set volume output muted false';;
 				esac
 	        fi
-	     	currentSong="$(osascript -e 'tell application "iTunes" to name of current track')"
+	     	# currentSong="$(osascript -e 'tell application "iTunes" to name of current track')"
 	#       currentArtist="$(osascript -e 'tell application "iTunes" to album of current track')"
 	#       currentAlbum="$(osascript -e 'tell application "iTunes" to artist of current track')"
 	#		playerPos="$(osascript -e 'tell application "iTunes" to player position')"
@@ -82,5 +81,4 @@ while true
 			# esac
 			# playerPos="$(osascript -e 'tell application "iTunes" to player position')"
 	  #       echo $playerPos > /dev/cu.usbmodem0E2198D1
-        sleep 1
 done
