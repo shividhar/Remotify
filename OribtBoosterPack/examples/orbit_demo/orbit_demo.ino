@@ -47,8 +47,8 @@ int	ycoRocketStart	= 11;
 int	xcoExhstStart	= 39;
 int	ycoExhstStart	= 11;
 
-int	cRocketWidth 	= 4;
-int	cRocketHeight 	= 4;
+int	cRocketWidth 	= 5;
+int	cRocketHeight 	= 5;
 
 int	cExhstWidth	= 9;
 int	cExhstHeight	= 16;
@@ -64,7 +64,7 @@ int	fExhstSwt	= 0;
 //  0x08, 0x07, 0x03, 0x01, 0x01, 0x01, 0x01, 0x01};
 
 char rgBMPRocket[] = {
-  0x0F, 0x05, 0x07, 0x0F
+  0x01
 };
 
 char	rgBMPExhst1[] = {
@@ -702,9 +702,26 @@ void OrbitDemo3() {
   /*
    * Draw the starting Rocket
    */
-  OrbitOledMoveTo(xcoRocketStart, ycoRocketStart);
-  OrbitOledPutBmp(cRocketWidth, cRocketHeight, rgBMPRocket);
+//  OrbitOledMoveTo(xcoRocketStart, ycoRocketStart);
+//  OrbitOledPutBmp(cRocketWidth, cRocketHeight, rgBMPRocket);
+//  OrbitOledSetDrawColor('s');
+  OrbitOledMoveTo(15,15);
+  OrbitOledDrawRect(18, 25);
+  
+  OrbitOledMoveTo(20,15);
+  OrbitOledDrawRect(23, 25);
 
+
+  int startPosX = 30;
+  int startPosY = 15;
+  OrbitOledMoveTo(startPosX,startPosY);
+  OrbitOledLineTo(startPosX,startPosY+10);
+  OrbitOledMoveTo(startPosX,startPosY+10);
+  OrbitOledLineTo(startPosX+18,startPosY-2);
+  OrbitOledMoveTo(startPosX,startPosY);
+  OrbitOledLineTo(startPosX+12,startPosY+7);
+//  OrbitOledMoveTo(15,23);
+//  OrbitOledLineTo(20,18);
   OrbitOledUpdate();
 
   /*

@@ -1,5 +1,5 @@
-const int leftSwitch=PA_6;
-const int rightSwitch=PA_7;
+uint32_t leftSwitch=PA_6;
+uint32_t rightSwitch=PA_7;
 const int switchCount=2;
 const int switches[switchCount]={leftSwitch, rightSwitch};
 bool switchState[switchCount];
@@ -8,41 +8,23 @@ void switchInitialize()
 {
   for(int i=0;i<switchCount;i++)
     pinMode(switches[i], INPUT);
-    switchState[0]=digitalRead(switches[0]);
-    switchState[1]=digitalRead(switches[1]);
-    muteInitialize();
-    repeatInitialize();
-}
-
-void repeatInitialize()
-{
-  if(switchState[0])
-      Serial.println("repeatOn");
-  else
-      Serial.println("repeatOff");
-  delay(10);
+  //set starting states as incorrect, forces first run to correct switch vs. computer inconsistencies
+  switchState[0]=!digitalRead(switches[0]);
+  switchState[1]=!digitalRead(switches[1]);
 }
 
 void repeatSwitch()
 {
+  delay(delayTime); //repeat struggles for unkown reasons 
   if(digitalRead(switches[0])!=switchState[0])
   {
     switchState[0]=digitalRead(switches[0]);
     if(switchState[0])
-      Serial.println("repeatOn");
+      Serial.println(3); //repeatOn
     else
-      Serial.println("repeatOff");
+      Serial.println(4); //repeatOff
   }
-  delay(10);
-}
-
-void muteInitialize()
-{
-  if(switchState[1])
-      Serial.println("muteOn");
-  else
-      Serial.println("muteOff");
-  delay(10);
+  delay(delayTime);
 }
 
 void muteSwitch()
@@ -51,10 +33,10 @@ void muteSwitch()
   {
     switchState[1]=digitalRead(switches[1]);
     if(switchState[1])
-      Serial.println("muteOn");
+      Serial.println(5); //muteOn
     else
-      Serial.println("muteOff");
+      Serial.println(6); //muteOff
   }
-  delay(10);
+  delay(delayTime);
 }
 
