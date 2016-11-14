@@ -1,4 +1,3 @@
-extern "C" {
 #include <delay.h>
 #include <FillPat.h>
 #include <I2CEEPROM.h>
@@ -7,7 +6,6 @@ extern "C" {
 #include <OrbitOled.h>
 #include <OrbitOledChar.h>
 #include <OrbitOledGrph.h>
-}
 
 #define inputLength 200
 

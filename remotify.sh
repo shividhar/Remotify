@@ -23,6 +23,7 @@ while true
                 currentApp="iTunes"
             fi
 
+            
             case "${STR:0:1}" in
 #           playpause toggle
                 0)
