@@ -24,8 +24,6 @@ void setup()
   buttonInitialize();
 
   OrbitOledInit();
-  OrbitOledClear();
-  OrbitOledClearBuffer();
   OrbitOledSetDrawMode(modOledSet);
   
   playPauseInitialize();
