@@ -15,7 +15,7 @@ void volume()
   ADCProcessorTrigger(ADC0_BASE, 0);
   while(!ADCIntStatus(ADC0_BASE, 0, false));
   ADCSequenceDataGet(ADC0_BASE, 0, &ulAIN0);
-  if(ulAIN0/41!=previousVolume)
+  if(ulAIN0/40!=previousVolume)
   {
     Serial.print("v");
     //max potentiometer val is 4095, 4095/40=102

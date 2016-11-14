@@ -1,8 +1,8 @@
 #!/bin/bash
 
 ##### Initialization #####
-#currentSong="$(osascript -e 'tell application "Spotify" to name of current track')"$"~"$"$(osascript -e 'tell application "Spotify" to artist of current track')"
-currentSong="$(osascript -e 'tell application "iTunes" to name of current track')"$"~"$"$(osascript -e 'tell application "iTunes" to artist of current track')"
+currentSong="$(osascript -e 'tell application "Spotify" to name of current track')"$"~"$"$(osascript -e 'tell application "Spotify" to artist of current track')"
+# currentSong="$(osascript -e 'tell application "iTunes" to name of current track')"$"~"$"$(osascript -e 'tell application "iTunes" to artist of current track')"
 echo $currentSong > /dev/cu.usbmodem0E2198D1
 ##########################
 
