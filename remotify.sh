@@ -1,7 +1,24 @@
 #!/bin/bash
+
+##### Initialization #####
+currentSong="$(osascript -e 'tell application "Spotify" to name of current track')"
+echo $currentSong > /dev/cu.usbmodem0E2198D1
+##########################
+
+function readIn
+{
+	read -e STR < /dev/cu.usbmodem0E2198D1;
+}
+
 while true  
         do
-        	read -e STR < /dev/cu.usbmodem0E2198D1
+        	readIn 2> /dev/null 
+        	# if read -e STR < /dev/cu.usbmodem0E2198D1; then
+        	# 	echo "hit"
+        	# else
+        	# 	echo "WTF"
+        	# fi
+        	# read -e STR < /dev/cu.usbmodem0E2198D1;
         	if pgrep -x 'Spotify' &> /dev/null; then
 	         	case "${STR:0:1}" in
 #           playpause toggle
@@ -10,8 +27,9 @@ while true
 
 #           next track
 				 	1)
-				 		osascript -e 'tell application "Spotify" to play next track';;
-
+				 		osascript -e 'tell application "Spotify" to play next track'
+				 		currentSong="$(osascript -e 'tell application "Spotify" to name of current track')"
+						echo $currentSong > /dev/cu.usbmodem0E2198D1;;
 #           previous track
 				 	2)
 				 		osascript -e 'tell application "Spotify" to play previous track';;
@@ -23,14 +41,16 @@ while true
 #           turn repeat off
 		            4)
 		                osascript -e 'tell application "Spotify" to set repeating to false';;
-
 #           mute
 		            5)
 		                osascript -e 'set volume output muted true';;
 #           unmute
 		            6)
 				 		osascript -e 'set volume output muted false';;
-
+				 	7)
+						echo "hit"
+						playerState="$(osascript -e 'tell application "Spotify" to player state')"
+						echo $playerState > /dev/cu.usbmodem0E2198D1;;
                     v)
                         vol=${STR:1:1}${STR:2:1}${STR:3:1}
                         osascript -e 'tell application "Spotify" to set sound volume to '$vol''
@@ -44,7 +64,9 @@ while true
 #                        osascript -e 'tell application "Spotify" to set shuffle enabled to true'
 #                    fi
 #                    ;;
-
+					# currentSong="$(osascript -e 'tell application "Spotify" to name of current track')"
+					# echo $currentSong > /dev/cu.usbmodem0E2198D1
+					# sleep 2
 				esac
 	        elif pgrep -x 'iTunes'  &> /dev/null; then
 	         	case "${STR:0:1}" in

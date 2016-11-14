@@ -2,10 +2,12 @@ uint32_t bottomButton=PD_2;
 uint32_t topButton=PE_0;
 const int buttonCount=2;
 const int buttons[buttonCount]={topButton, bottomButton};
+bool toggle = false;
 
 struct buttonState
 { 
   bool state;
+  bool prevState;
   bool isRising;
 };
 
@@ -17,16 +19,30 @@ void buttonInitialize()
     pinMode(buttons[i], INPUT);
 }
 
+void playPauseInitialize(){
+  //Init Pause Button
+  OrbitOledMoveTo(15,15);
+  OrbitOledDrawRect(18, 25);
+  OrbitOledMoveTo(20,15);
+  OrbitOledDrawRect(23, 25);
+  OrbitOledUpdate();  
+}
+
 void playpauseButton()
 {
-  bool previousState=buttonStates[0].state;
-  buttonStates[0].state=digitalRead(buttons[0]);
-  buttonStates[0].isRising=(!previousState && buttonStates[0].state);
-  if(buttonStates[0].isRising)
-  {
+  bool currentState=digitalRead(buttons[0]);
+
+  if(currentState && !buttonStates[0].prevState){
+    if(toggle){
+      toggle = false;
+    }else{
+      toggle = true;
+    }
     Serial.println(0); //playpause
+    draw();
     delay(delayTime);
   }
+  buttonStates[0].prevState=currentState;
 }
 
 void nextButton()
@@ -37,6 +53,7 @@ void nextButton()
   if(buttonStates[1].isRising)
   {
     Serial.println(1); //next
+    draw();
     delay(delayTime);
   }
 }
