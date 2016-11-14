@@ -28,7 +28,7 @@ while true
 #           next track
 				 	1)
 				 		osascript -e 'tell application "Spotify" to play next track'
-				 		currentSong="$(osascript -e 'tell application "Spotify" to name of current track')"
+				 		currentSong="$(osascript -e 'tell application "Spotify" to name of current track')"$"~"$"$(osascript -e 'tell application "Spotify" to artist of current track')"
 						echo $currentSong > /dev/cu.usbmodem0E2198D1;;
 #           previous track
 				 	2)

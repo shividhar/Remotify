@@ -1,5 +1,6 @@
 extern "C" {
 #include <delay.h>
+//#include <algorithm>
 #include <FillPat.h>
 #include <I2CEEPROM.h>
 #include <LaunchPad.h>
@@ -9,8 +10,10 @@ extern "C" {
 #include <OrbitOledGrph.h>
 }
 
+#define inputLength 200
+
 int delayTime=300;
-char inputText[100];
+char inputText[inputLength];
 bool initialize = false;
 
 void setup()
@@ -53,7 +56,7 @@ void loop() {
 bool serialEvent()
 {
   while (Serial.available()) {
-    memset(inputText, 0, 100);
+    memset(inputText, 0, inputLength);
     Serial.readBytesUntil('\n',inputText, 1000);
     return true;
   }
