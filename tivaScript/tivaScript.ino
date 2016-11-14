@@ -1,6 +1,5 @@
 extern "C" {
 #include <delay.h>
-//#include <algorithm>
 #include <FillPat.h>
 #include <I2CEEPROM.h>
 #include <LaunchPad.h>
