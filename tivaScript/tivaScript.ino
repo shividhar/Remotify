@@ -1,6 +1,5 @@
 #include <delay.h>
 #include <FillPat.h>
-#include <I2CEEPROM.h>
 #include <LaunchPad.h>
 #include <OrbitBoosterPackDefs.h>
 #include <OrbitOled.h>
@@ -11,11 +10,10 @@
 
 int delayTime=300;
 char inputText[inputLength];
-bool initialize = false;
+int previousVolume=-1;
 
 void setup()
 {
-  initialize = true;
   Serial.begin(9600);
   volumeInitialize();
   switchInitialize();
@@ -29,10 +27,6 @@ void setup()
 }
 
 void loop() {
-  if(initialize){
-    Serial.println(1);
-    initialize = false;
-  }
   repeatSwitch();
   volume();
   muteSwitch();

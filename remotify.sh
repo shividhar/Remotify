@@ -1,8 +1,8 @@
 ##### Initialization ######
 if pgrep -x 'Spotify' &> /dev/null; then
-currentApp="Spotify"
+  currentApp="Spotify"
 elif pgrep -x 'iTunes'  &> /dev/null; then
-currentApp="iTunes"
+  currentApp="iTunes"
 fi
 playerData="$(osascript -e 'tell application "'$currentApp'" to name of current track')"$"~"$"$(osascript -e 'tell application "'$currentApp'" to artist of current track')"
 echo $playerData > /dev/cu.usbmodem0E2198D1
@@ -10,94 +10,82 @@ echo $playerData > /dev/cu.usbmodem0E2198D1
 
 function readIn
 {
-read -e STR < /dev/cu.usbmodem0E2198D1;
+  read -e STR < /dev/cu.usbmodem0E2198D1;
 }
-currentSong=
+
+currentSong= #assumes theres no track change if same named song by different artisst is cycled
 prevSong="14"
+
 while true
 do
-readIn 2> /dev/null
+  readIn 2> /dev/null
 
-if pgrep -x 'Spotify' &> /dev/null; then
-currentApp="Spotify"
-elif pgrep -x 'iTunes'  &> /dev/null; then
-currentApp="iTunes"
-fi
+  # add while loop with nothing curretn app condition
+  if pgrep -x 'Spotify'  &> /dev/null; then
+    currentSong="$(osascript -e 'tell application "'$currentApp'" to name of current track')"
+    currentApp="Spotify"
+  elif pgrep -x 'iTunes'  &> /dev/null; then
+    currentSong="$(osascript -e 'tell application "'$currentApp'" to name of current track')"
+    currentApp="iTunes"
+  fi
 
-currentSong="$(osascript -e 'tell application "'$currentApp'" to name of current track')"
+  case "${STR:0:1}" in
+    0) #playpause toggle
+    osascript -e 'tell application "'$currentApp'" to playpause';;
 
-case "${STR:0:1}" in
-#           playpause toggle
-0)
-osascript -e 'tell application "'$currentApp'" to playpause';;
+    1) #next track
+    osascript -e 'tell application "'$currentApp'" to play next track'
+    playerData="$(osascript -e 'tell application "'$currentApp'" to name of current track')"$"~"$"$(osascript -e 'tell application "'$currentApp'" to artist of current track')"
+    echo $playerData > /dev/cu.usbmodem0E2198D1;;
 
-#           next track
-1)
-osascript -e 'tell application "'$currentApp'" to play next track'
-playerData="$(osascript -e 'tell application "'$currentApp'" to name of current track')"$"~"$"$(osascript -e 'tell application "'$currentApp'" to artist of current track')"
-echo $playerData > /dev/cu.usbmodem0E2198D1;;
+    2) #previous track
+    osascript -e 'tell application "'$currentApp'" to play previous track';;
 
-#           previous track
-2)
-osascript -e 'tell application "'$currentApp'" to play previous track';;
+    3) #turn repeat on
+    if [ "$currentApp" = "Spotify" ]
+    then
+      osascript -e 'tell application "Spotify" to set repeating to true'
+    elif [ "$currentApp" = "iTunes" ]
+    then
+      osascript -e 'tell application "iTunes" to set song repeat to all'
+    fi;;
 
-#           turn repeat on
-3)
-if [ "$currentApp" = "Spotify" ]
-then
-osascript -e 'tell application "Spotify" to set repeating to true'
-elif [ "$currentApp" = "iTunes" ]
-then
-osascript -e 'tell application "iTunes" to set song repeat to all'
-fi;;
+    4) #turn repeat off
+    if [ "$currentApp" = "Spotify" ]
+    then
+      osascript -e 'tell application "Spotify" to set repeating to false'
+    elif [ "$currentApp" = "iTunes" ]
+    then
+      osascript -e 'tell application "iTunes" to set song repeat to off'
+    fi;;
 
-#           turn repeat off
-4)
-if [ "$currentApp" = "Spotify" ]
-then
-osascript -e 'tell application "Spotify" to set repeating to false'
-elif [ "$currentApp" = "iTunes" ]
-then
-osascript -e 'tell application "iTunes" to set song repeat to off'
-fi;;
+    5) #mute
+    osascript -e 'set volume output muted true';;
 
-#           mute
-5)
-osascript -e 'set volume output muted true';;
-#           unmute
-6)
-osascript -e 'set volume output muted false';;
-#                7)
-#					echo "hit"
-#					playerState="$(osascript -e 'tell application "Spotify" to player state')"
-#					echo $playerState > /dev/cu.usbmodem0E2198D1;;
-v)
-vol=${STR:1:1}${STR:2:1}
-osascript -e 'tell application "'$currentApp'" to set sound volume to '$vol''
+    6) #unmute
+    osascript -e 'set volume output muted false';;
 
-#               shuffle)
-#                    shuffleState="$(osascript -e 'tell application "'$currentApp'" to shuffle enabled')"
-#                    if [ $shuffleState = "true" ]
-#                    then
-#                        osascript -e 'tell application "'$currentApp'" to set shuffle enabled to false'
-#                    else
-#                        osascript -e 'tell application "'$currentApp'" to set shuffle enabled to true'
-#                    fi
-#                    ;;
-esac
+    v) #volume
+    vol=${STR:1:1}${STR:2:1}
+    osascript -e 'tell application "'$currentApp'" to set sound volume to '$vol''
 
-if [ "$prevSong" != "$currentSong" ]
-then
-playerData="$(osascript -e 'tell application "'$currentApp'" to name of current track')"$"~"$"$(osascript -e 'tell application "'$currentApp'" to artist of current track')"
-echo $playerData > /dev/cu.usbmodem0E2198D1
-prevSong=$currentSong
-fi
-# playerData="$(osascript -e 'tell application "'$currentApp'" to name of current track')"$"~"$"$(osascript -e 'tell application "'$currentApp'" to artist of current track')"
-# echo $playerData > /dev/cu.usbmodem0E2198D1
-# sleep 1
+    #shuffle)
+    #shuffleState="$(osascript -e 'tell application "'$currentApp'" to shuffle enabled')"
+    #if [ $shuffleState = "true" ]
+    #then
+    # osascript -e 'tell application "'$currentApp'" to set shuffle enabled to false'
+    #else
+    # osascript -e 'tell application "'$currentApp'" to set shuffle enabled to true'
+    #fi
+    #;;
+  esac
+
+  if [ "$prevSong" != "$currentSong" ]
+  then
+    playerData="$(osascript -e 'tell application "'$currentApp'" to name of current track')"$"~"$"$(osascript -e 'tell application "'$currentApp'" to artist of current track')"
+    echo $playerData > /dev/cu.usbmodem0E2198D1
+    prevSong=$currentSong
+  fi
 done
-#
-#		playerPos="$(osascript -e 'tell application "iTunes" to player position')"
-#        echo $playerPos > /dev/cu.usbmodem0E2198D1
-# playerPos="$(osascript -e 'tell application "iTunes" to player position')"
-#       echo $playerPos > /dev/cu.usbmodem0E2198D1
+#playerPos="$(osascript -e 'tell application "iTunes" to player position')"
+#echo $playerPos > /dev/cu.usbmodem0E2198D1

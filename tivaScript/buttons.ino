@@ -32,10 +32,14 @@ void playpauseButton()
 {
   bool currentState=digitalRead(buttons[0]);
 
-  if(currentState && !buttonStates[0].prevState){
-    if(toggle){
+  if(currentState && !buttonStates[0].prevState)
+  {
+    if(toggle)
+    {
       toggle = false;
-    }else{
+    }
+    else
+    {
       toggle = true;
     }
     Serial.println(0); //playpause
