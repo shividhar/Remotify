@@ -1,5 +1,4 @@
 uint32_t ulAIN0;
-int previousVolume=-1;
 
 void volumeInitialize()
 {
@@ -15,11 +14,12 @@ void volume()
   ADCProcessorTrigger(ADC0_BASE, 0);
   while(!ADCIntStatus(ADC0_BASE, 0, false));
   ADCSequenceDataGet(ADC0_BASE, 0, &ulAIN0);
-  if(ulAIN0/40!=previousVolume)
+  if(ulAIN0/41!=previousVolume)
   {
     Serial.print("v");
     //max potentiometer val is 4095, 4095/41=99
     Serial.println(ulAIN0/41);
+//    drawVolume();
     previousVolume=ulAIN0/41;
   }
   delay(delayTime);

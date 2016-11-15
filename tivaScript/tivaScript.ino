@@ -1,17 +1,19 @@
 #include <delay.h>
 #include <FillPat.h>
+//#include <I2CEEPROM.h>
 #include <LaunchPad.h>
 #include <OrbitBoosterPackDefs.h>
 #include <OrbitOled.h>
 #include <OrbitOledChar.h>
 #include <OrbitOledGrph.h>
 
-
 #define inputLength 200
+
 
 int delayTime=300;
 char inputText[inputLength];
 bool initialize = false;
+int previousVolume=-1;
 
 void setup()
 {
@@ -22,8 +24,6 @@ void setup()
   buttonInitialize();
 
   OrbitOledInit();
-  OrbitOledClear();
-  OrbitOledClearBuffer();
   OrbitOledSetDrawMode(modOledSet);
   
   playPauseInitialize();
@@ -32,7 +32,6 @@ void setup()
 
 void loop() {
   if(initialize){
-    Serial.println(1);
     initialize = false;
   }
   repeatSwitch();

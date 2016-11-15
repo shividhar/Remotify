@@ -13,6 +13,7 @@ function readIn
 	read -e STR < /dev/cu.usbmodem0E2198D1;
 }
 currentSong=
+prevSong="14"
 while true  
         do
         	readIn 2> /dev/null
@@ -23,7 +24,8 @@ while true
                 currentApp="iTunes"
             fi
 
-            prevSong="$(osascript -e 'tell application "'$currentApp'" to name of current track')"
+            currentSong="$(osascript -e 'tell application "'$currentApp'" to name of current track')"
+
             case "${STR:0:1}" in
 #           playpause toggle
                 0)
@@ -82,15 +84,17 @@ while true
 #                        osascript -e 'tell application "'$currentApp'" to set shuffle enabled to true'
 #                    fi
 #                    ;;
-			currentSong="$(osascript -e 'tell application "'$currentApp'" to name of current track')"
-			if [ "$prevSong" != "$currentSong" ]
-			then
-				playerData="$(osascript -e 'tell application "'$currentApp'" to name of current track')"$"~"$"$(osascript -e 'tell application "'$currentApp'" to artist of current track')"
-                echo $playerData > /dev/cu.usbmodem0E2198D1
-                prevSong = currentSong
-            fi
-
             esac
+
+            if [ "$prevSong" != "$currentSong" ]
+            then
+                playerData="$(osascript -e 'tell application "'$currentApp'" to name of current track')"$"~"$"$(osascript -e 'tell application "'$currentApp'" to artist of current track')"
+                echo $playerData > /dev/cu.usbmodem0E2198D1
+                prevSong=$currentSong
+            fi
+            # playerData="$(osascript -e 'tell application "'$currentApp'" to name of current track')"$"~"$"$(osascript -e 'tell application "'$currentApp'" to artist of current track')"
+            # echo $playerData > /dev/cu.usbmodem0E2198D1
+            # sleep 1
 done
 #
     #		playerPos="$(osascript -e 'tell application "iTunes" to player position')"
