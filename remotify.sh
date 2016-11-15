@@ -19,7 +19,6 @@ prevSong="14"
 while true
 do
   readIn 2> /dev/null
-
   # add while loop with nothing curretn app condition
   if pgrep -x 'Spotify'  &> /dev/null; then
     currentSong="$(osascript -e 'tell application "'$currentApp'" to name of current track')"

@@ -9,7 +9,7 @@
 #define inputLength 200
 
 int delayTime=300;
-char inputText[inputLength];
+char inputText[inputLength]={0};
 int previousVolume=-1;
 
 void setup()

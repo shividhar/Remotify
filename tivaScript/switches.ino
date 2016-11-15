@@ -1,7 +1,7 @@
 uint32_t leftSwitch=PA_6;
 uint32_t rightSwitch=PA_7;
 const int switchCount=2;
-const int switches[switchCount]={leftSwitch, rightSwitch};
+uint32_t switches[switchCount]={leftSwitch, rightSwitch};
 bool switchState[switchCount];
 
 void switchInitialize()

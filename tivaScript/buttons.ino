@@ -1,7 +1,8 @@
 uint32_t bottomButton=PD_2;
 uint32_t topButton=PE_0;
-const int buttonCount=2;
-const int buttons[buttonCount]={topButton, bottomButton};
+uint32_t rightButton=PF_0;
+const int buttonCount=3;
+uint32_t buttons[buttonCount]={topButton, bottomButton, rightButton};
 bool toggle = false;
 
 struct buttonState
@@ -61,3 +62,4 @@ void nextButton()
     delay(delayTime);
   }
 }
+
