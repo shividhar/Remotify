@@ -1,5 +1,47 @@
+char bmp[] = {
+0xFF,0x01,0x01,0x01,0x01,0x01,0x01,0xFF
+};
+
 void draw(){
+//  OrbitOledClearBuffer();
+//  OrbitOledSetCharUpdate(0);
   OrbitOledClear();
+  drawSongData();
+  drawPlayPause();
+  drawVolume();
+
+//  
+//  OrbitOledMoveTo(40,15);
+//  OrbitOledPutBmp(8,5,bmp);
+//  OrbitOledMoveTo(48,20);
+//  OrbitOledLineTo(443,20);
+
+  
+  OrbitOledUpdate();
+}
+
+void drawPlayPause(){
+  int startPosX = 0;
+  int startPosY = 21;
+  if(toggle)
+  {
+    OrbitOledMoveTo(startPosX,startPosY);
+    OrbitOledLineTo(startPosX,startPosY+10);
+    OrbitOledMoveTo(startPosX,startPosY+10);
+    OrbitOledLineTo(startPosX+10,startPosY+5);
+    OrbitOledMoveTo(startPosX,startPosY);
+    OrbitOledLineTo(startPosX+12,startPosY+6);
+  }
+  else
+  {
+    OrbitOledMoveTo(startPosX,startPosY);
+    OrbitOledDrawRect(startPosX+3, startPosY+10);
+    OrbitOledMoveTo(startPosX+5,startPosY);
+    OrbitOledDrawRect(startPosX+8, startPosY+10);
+  }  
+}
+
+void drawSongData(){
   int songLength=0;
   int artistLength=0;
   for(int i = 0; i < inputLength; i++)
@@ -20,28 +62,7 @@ void draw(){
     OrbitOledDrawString(song);
     OrbitOledMoveTo(0, 10);
     OrbitOledDrawString(artist);
-  }
-  
-  int startPosX = 0;
-  int startPosY = 21;
-  if(toggle)
-  {
-    OrbitOledMoveTo(startPosX,startPosY);
-    OrbitOledLineTo(startPosX,startPosY+10);
-    OrbitOledMoveTo(startPosX,startPosY+10);
-    OrbitOledLineTo(startPosX+10,startPosY+5);
-    OrbitOledMoveTo(startPosX,startPosY);
-    OrbitOledLineTo(startPosX+12,startPosY+6);
-  }
-  else
-  {
-    OrbitOledMoveTo(startPosX,startPosY);
-    OrbitOledDrawRect(startPosX+3, startPosY+10);
-    OrbitOledMoveTo(startPosX+5,startPosY);
-    OrbitOledDrawRect(startPosX+8, startPosY+10);
-  }
-  drawVolume();
-  OrbitOledUpdate();
+  }  
 }
 
 void drawVolume(){
@@ -60,14 +81,13 @@ void drawVolume(){
     bars = 0;
   }
 
-  int rectangleStartX = 20;
-  int rectangleStartY = 25;
+  int rectangleStartX = 15;
+  int rectangleStartY = 30;
   
-  for(int i = 0; i < bars; i++){
+  for(int i = 1; i <= bars; i++){
     OrbitOledMoveTo(rectangleStartX,rectangleStartY);
-    OrbitOledDrawRect(rectangleStartX+1, rectangleStartY+5+i*2);
-    OrbitOledMoveTo(rectangleStartX,rectangleStartY);
-    rectangleStartX = rectangleStartX + 2;
+    OrbitOledDrawRect(rectangleStartX + 1, rectangleStartY+(i*2));
+    rectangleStartX = rectangleStartX + 3;
     rectangleStartY = rectangleStartY - 2;
   }
 }
