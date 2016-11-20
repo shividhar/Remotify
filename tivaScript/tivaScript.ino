@@ -32,7 +32,7 @@ void loop() {
   muteSwitch();
   playpauseButton();
   nextButton();
-
+  previousButton();
   if(serialEvent())
   {
     draw();
