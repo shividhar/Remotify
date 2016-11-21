@@ -1,11 +1,12 @@
 ##### Initialization ######
+trap 'kill $(jobs -p)' EXIT
+sh playerData.sh &
+
 if pgrep -x 'Spotify' &> /dev/null; then
   currentApp="Spotify"
 elif pgrep -x 'iTunes'  &> /dev/null; then
   currentApp="iTunes"
 fi
-playerData="$(osascript -e 'tell application "'$currentApp'" to name of current track')"$"~"$"$(osascript -e 'tell application "'$currentApp'" to artist of current track')"
-echo $playerData > /dev/cu.usbmodem0E2198D1
 ###########################
 
 function readIn
@@ -13,34 +14,27 @@ function readIn
   read -e STR < /dev/cu.usbmodem0E2198D1;
 }
 
-currentSong= #assumes theres no track change if same named song by different artisst is cycled
-prevSong="14"
-
 while true
 do
   readIn 2> /dev/null
   # add while loop with nothing curretn app condition
   if pgrep -x 'Spotify'  &> /dev/null; then
-    currentSong="$(osascript -e 'tell application "'$currentApp'" to name of current track')"
     currentApp="Spotify"
   elif pgrep -x 'iTunes'  &> /dev/null; then
-    currentSong="$(osascript -e 'tell application "'$currentApp'" to name of current track')"
     currentApp="iTunes"
   fi
 
   case "${STR:0:1}" in
-    0) #playpause toggle
+    a) #playpause toggle
     osascript -e 'tell application "'$currentApp'" to playpause';;
 
-    1) #next track
-    osascript -e 'tell application "'$currentApp'" to play next track'
-    playerData="$(osascript -e 'tell application "'$currentApp'" to name of current track')"$"~"$"$(osascript -e 'tell application "'$currentApp'" to artist of current track')"
-    echo $playerData > /dev/cu.usbmodem0E2198D1;;
+    b) #next track
+    osascript -e 'tell application "'$currentApp'" to play next track';;
 
-    2) #previous track
+    c) #previous track
     osascript -e 'tell application "'$currentApp'" to play previous track';;
 
-    3) #turn repeat on
+    d) #turn repeat on
     if [ "$currentApp" = "Spotify" ]
     then
       osascript -e 'tell application "Spotify" to set repeating to true'
@@ -49,7 +43,7 @@ do
       osascript -e 'tell application "iTunes" to set song repeat to all'
     fi;;
 
-    4) #turn repeat off
+    e) #turn repeat off
     if [ "$currentApp" = "Spotify" ]
     then
       osascript -e 'tell application "Spotify" to set repeating to false'
@@ -58,10 +52,10 @@ do
       osascript -e 'tell application "iTunes" to set song repeat to off'
     fi;;
 
-    5) #mute
+    f) #mute
     osascript -e 'set volume output muted true';;
 
-    6) #unmute
+    g) #unmute
     osascript -e 'set volume output muted false';;
 
     v) #volume
@@ -78,13 +72,4 @@ do
     #fi
     #;;
   esac
-
-  if [ "$prevSong" != "$currentSong" ]
-  then
-    playerData="$(osascript -e 'tell application "'$currentApp'" to name of current track')"$"~"$"$(osascript -e 'tell application "'$currentApp'" to artist of current track')"
-    echo $playerData > /dev/cu.usbmodem0E2198D1
-    prevSong=$currentSong
-  fi
 done
-#playerPos="$(osascript -e 'tell application "iTunes" to player position')"
-#echo $playerPos > /dev/cu.usbmodem0E2198D1

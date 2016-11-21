@@ -34,7 +34,7 @@ void playpauseButton()
   if(buttonStates[0].state && !buttonStates[0].prevState)
   {
     toggle=!toggle;
-    Serial.println(0); //playpause
+    Serial.println('a'); //playpause
     draw();
     delay(delayTime);
   }
@@ -46,7 +46,7 @@ void nextButton()
   buttonStates[1].state=digitalRead(buttons[1]);
   if(buttonStates[1].state && !buttonStates[1].prevState)
   {
-    Serial.println(1); //next
+    Serial.println('b'); //next
     if(toggle) //if the pause icon is shown, show play as new track plays
       toggle=!toggle;
     draw();
@@ -60,7 +60,7 @@ void previousButton()
   buttonStates[2].state=!digitalRead(buttons[2]);
   if(buttonStates[2].state && !buttonStates[2].prevState)
   {
-    Serial.println(2); //previous
+    Serial.println('c'); //previous
     if(toggle) //if the pause icon is shown, show play as new track plays
       toggle=!toggle;
     draw();

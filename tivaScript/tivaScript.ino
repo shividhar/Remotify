@@ -37,8 +37,6 @@ void loop() {
   {
     draw();
   }
-  Serial.println(9); //do nothing
-  delay(delayTime*2);
   delayTime=50;
 }
 
