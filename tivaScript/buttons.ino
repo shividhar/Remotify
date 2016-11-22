@@ -6,7 +6,7 @@ uint32_t buttons[buttonCount]={topButton, bottomButton, rightButton};
 bool toggle = false;
 
 struct buttonState
-{ 
+{
   bool state;
   bool prevState;
 };
@@ -16,7 +16,7 @@ struct buttonState buttonStates[buttonCount];
 void buttonInitialize()
 {
   for(int i=0;i<buttonCount;i++)
-    pinMode(buttons[i], INPUT);
+  pinMode(buttons[i], INPUT);
 }
 
 void playPauseInitialize(){
@@ -25,7 +25,7 @@ void playPauseInitialize(){
   OrbitOledDrawRect(18, 25);
   OrbitOledMoveTo(20,15);
   OrbitOledDrawRect(23, 25);
-  OrbitOledUpdate();  
+  OrbitOledUpdate();
 }
 
 void playpauseButton()
@@ -68,4 +68,3 @@ void previousButton()
   }
   buttonStates[2].prevState=buttonStates[2].state;
 }
-

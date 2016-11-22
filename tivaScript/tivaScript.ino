@@ -21,9 +21,9 @@ void setup()
 
   OrbitOledInit();
   OrbitOledSetDrawMode(modOledSet);
-  
+
   playPauseInitialize();
-  Serial.flush();   
+  Serial.flush();
 }
 
 void loop() {

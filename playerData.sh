@@ -1,14 +1,15 @@
+##### Initialization ######
 if pgrep -x 'Spotify' &> /dev/null; then
   currentApp="Spotify"
 elif pgrep -x 'iTunes'  &> /dev/null; then
   currentApp="iTunes"
 fi
 
-currentSong= #assumes theres no track change if same named song by different artisst is cycled
-prevSong="14"
+previousSong=
 
 playerData="$(osascript -e 'tell application "'$currentApp'" to name of current track')"$"~"$"$(osascript -e 'tell application "'$currentApp'" to artist of current track')"
 echo $playerData > /dev/cu.usbmodem0E2198D1
+########################################
 
 while true
 do
@@ -17,12 +18,13 @@ do
   elif pgrep -x 'iTunes'  &> /dev/null; then
     currentApp="iTunes"
   fi
+
   currentSong="$(osascript -e 'tell application "'$currentApp'" to name of current track')"
-  if [ "$prevSong" != "$currentSong" ]
+  if [ "$previousSong" != "$currentSong" ]
   then
     playerData="$(osascript -e 'tell application "'$currentApp'" to name of current track')"$"~"$"$(osascript -e 'tell application "'$currentApp'" to artist of current track')"
     echo $playerData > /dev/cu.usbmodem0E2198D1
-    prevSong=$currentSong
+    previousSong=$currentSong
   fi
 done
 

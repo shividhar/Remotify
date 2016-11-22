@@ -17,7 +17,7 @@ function readIn
 while true
 do
   readIn 2> /dev/null
-  # add while loop with nothing curretn app condition
+
   if pgrep -x 'Spotify'  &> /dev/null; then
     currentApp="Spotify"
   elif pgrep -x 'iTunes'  &> /dev/null; then
