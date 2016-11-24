@@ -6,10 +6,9 @@ uint32_t buttons[buttonCount]={topButton, bottomButton, rightButton};
 bool toggle = false;
 
 struct buttonState
-{ 
+{
   bool state;
   bool prevState;
-  bool isRising;
 };
 
 struct buttonState buttonStates[buttonCount];
@@ -17,7 +16,7 @@ struct buttonState buttonStates[buttonCount];
 void buttonInitialize()
 {
   for(int i=0;i<buttonCount;i++)
-    pinMode(buttons[i], INPUT);
+  pinMode(buttons[i], INPUT);
 }
 
 void playPauseInitialize(){
@@ -26,40 +25,46 @@ void playPauseInitialize(){
   OrbitOledDrawRect(18, 25);
   OrbitOledMoveTo(20,15);
   OrbitOledDrawRect(23, 25);
-  OrbitOledUpdate();  
+  OrbitOledUpdate();
 }
 
 void playpauseButton()
 {
-  bool currentState=digitalRead(buttons[0]);
-
-  if(currentState && !buttonStates[0].prevState)
+  buttonStates[0].state=digitalRead(buttons[0]);
+  if(buttonStates[0].state && !buttonStates[0].prevState)
   {
-    if(toggle)
-    {
-      toggle = false;
-    }
-    else
-    {
-      toggle = true;
-    }
-    Serial.println(0); //playpause
+    toggle=!toggle;
+    Serial.println('a'); //playpause
     draw();
     delay(delayTime);
   }
-  buttonStates[0].prevState=currentState;
+  buttonStates[0].prevState=buttonStates[0].state;
 }
 
 void nextButton()
 {
-  bool previousState=buttonStates[1].state;
   buttonStates[1].state=digitalRead(buttons[1]);
-  buttonStates[1].isRising=(!previousState && buttonStates[1].state);
-  if(buttonStates[1].isRising)
+  if(buttonStates[1].state && !buttonStates[1].prevState)
   {
-    Serial.println(1); //next
+    Serial.println('b'); //next
+    if(toggle) //if the pause icon is shown, show play as new track plays
+      toggle=!toggle;
     draw();
     delay(delayTime);
   }
+  buttonStates[1].prevState=buttonStates[1].state;
 }
 
+void previousButton()
+{
+  buttonStates[2].state=!digitalRead(buttons[2]);
+  if(buttonStates[2].state && !buttonStates[2].prevState)
+  {
+    Serial.println('c'); //previous
+    if(toggle) //if the pause icon is shown, show play as new track plays
+      toggle=!toggle;
+    draw();
+    delay(delayTime);
+  }
+  buttonStates[2].prevState=buttonStates[2].state;
+}

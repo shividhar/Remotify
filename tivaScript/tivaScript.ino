@@ -21,9 +21,9 @@ void setup()
 
   OrbitOledInit();
   OrbitOledSetDrawMode(modOledSet);
-  
+
   playPauseInitialize();
-  Serial.flush();   
+  Serial.flush();
 }
 
 void loop() {
@@ -32,13 +32,11 @@ void loop() {
   muteSwitch();
   playpauseButton();
   nextButton();
-
+  previousButton();
   if(serialEvent())
   {
     draw();
   }
-  Serial.println(9); //do nothing
-  delay(delayTime*2);
   delayTime=50;
 }
 

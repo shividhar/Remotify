@@ -7,7 +7,7 @@ bool switchState[switchCount];
 void switchInitialize()
 {
   for(int i=0;i<switchCount;i++)
-    pinMode(switches[i], INPUT);
+  pinMode(switches[i], INPUT);
   //set starting states as incorrect, forces first run to correct switch vs. computer inconsistencies
   switchState[0]=!digitalRead(switches[0]);
   switchState[1]=!digitalRead(switches[1]);
@@ -15,14 +15,14 @@ void switchInitialize()
 
 void repeatSwitch()
 {
-  delay(delayTime); //repeat struggles for unkown reasons 
+  delay(delayTime); //repeat struggles for unkown reasons
   if(digitalRead(switches[0])!=switchState[0])
   {
     switchState[0]=digitalRead(switches[0]);
     if(switchState[0])
-      Serial.println(3); //repeatOn
+    Serial.println('d'); //repeatOn
     else
-      Serial.println(4); //repeatOff
+    Serial.println('e'); //repeatOff
   }
   delay(delayTime);
 }
@@ -33,10 +33,9 @@ void muteSwitch()
   {
     switchState[1]=digitalRead(switches[1]);
     if(switchState[1])
-      Serial.println(5); //muteOn
+    Serial.println('f'); //muteOn
     else
-      Serial.println(6); //muteOff
+    Serial.println('g'); //muteOff
   }
   delay(delayTime);
 }
-
