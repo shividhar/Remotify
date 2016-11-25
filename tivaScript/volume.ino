@@ -17,10 +17,11 @@ void volume()
   if(ulAIN0/41!=previousVolume)
   {
     Serial.print("v");
-    //max potentiometer val is 4095, 4095/41=99
+    //max potentiometer val is 4095; 4095/41=99
     Serial.println(ulAIN0/41);
+    previousVolume = ulAIN0/41;
     draw();
-    previousVolume=ulAIN0/41;
   }
   delay(delayTime);
 }
+
