@@ -58,6 +58,24 @@ do
     g) #unmute
     osascript -e 'set volume output muted false';;
 
+    h) #turn shuffle on
+    if [ "$currentApp" = "Spotify" ]
+    then
+      osascript -e 'tell application "Spotify" to set shuffling to true'
+    elif [ "$currentApp" = "iTunes" ]
+    then
+      osascript -e 'tell application "iTunes" to set shuffle of current playlist to 1'
+    fi;;
+
+    i) #turn shuffle off
+    if [ "$currentApp" = "Spotify" ]
+    then
+      osascript -e 'tell application "Spotify" to set shuffling to false'
+    elif [ "$currentApp" = "iTunes" ]
+    then
+      osascript -e 'tell application "iTunes" to set shuffle of current playlist to 0'
+    fi;;
+
     v) #volume
     vol=${STR:1:1}${STR:2:1}
     osascript -e 'tell application "'$currentApp'" to set sound volume to '$vol''

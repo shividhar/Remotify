@@ -1,5 +1,7 @@
 #include <Wire.h>
 
+bool shuffle = false;
+
 void WireRequestArray(int address, uint8_t* buffer, uint8_t amount);
 void WireWriteRegister(int address, uint8_t reg, uint8_t value);
 void WireWriteByte(int address, uint8_t value);
@@ -37,5 +39,22 @@ void ShakeTick()
   float z = *(int16_t*)(&zi) / SensorMaximumReading * SensorMaximumAccel;
   
   ShakeAccumulator = sqrt(x*x + y*y + z*z);
+}
+
+void shakeInitialize(){
+  ShakeTick();
+  if(ShakeIsShaking())
+  {
+    if(!shuffle)
+    {
+      Serial.println('h'); //repeatOn
+      shuffle = true;
+    }else
+    {
+      Serial.println('i');  
+      shuffle = false;
+    }
+    delay(200);
+  }
 }
 
