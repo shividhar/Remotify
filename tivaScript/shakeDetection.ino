@@ -41,20 +41,22 @@ void ShakeTick()
   ShakeAccumulator = sqrt(x*x + y*y + z*z);
 }
 
-void shakeInitialize(){
+void shakeInitialize()
+{
   ShakeTick();
   if(ShakeIsShaking())
   {
     if(!shuffle)
     {
-      Serial.println('h'); //repeatOn
+      Serial.println('h'); //shuffleOn
       shuffle = true;
-    }else
+    }
+    else
     {
-      Serial.println('i');  
+      Serial.println('i');  //shuffleOff
       shuffle = false;
     }
-    delay(200);
+    delay(delayTime*4);
   }
 }
 

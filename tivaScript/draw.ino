@@ -59,13 +59,14 @@ void drawSongData()
   char artist[artistLength];
   if(songLength)
   {
-    memcpy(song, inputText, songLength);
+    memcpy(song, inputText, songLength-1);
     memcpy(artist, inputText+songLength+1, artistLength); 
     OrbitOledMoveTo(0, 0);
     OrbitOledDrawString(song);
     OrbitOledMoveTo(0, 10);
     OrbitOledDrawString(artist);
-  }else
+  }
+  else
   {
     OrbitOledClearBuffer();
     OrbitOledMoveTo(0, 10);
@@ -103,7 +104,8 @@ void drawVolume()
   }
 }
 
-void drawRemotifyLogo(){
+void drawRemotifyLogo()
+{
   OrbitOledMoveTo(35, 24);
   OrbitOledDrawString("Remotify!");
 }

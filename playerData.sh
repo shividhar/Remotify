@@ -7,9 +7,9 @@ elif pgrep -x 'iTunes'  &> /dev/null; then
 fi
 
 previousSong=
-if [ ${currentApp}  ] 
+if [ ${currentApp}  ]
   then
-  playerData="$(osascript -e 'tell application "'$currentApp'" to name of current track')"$"~"$"$(osascript -e 'tell application "'$currentApp'" to artist of current track')"
+  playerData="$(osascript -e 'tell application "'$currentApp'" to name of current track')"$" ~"$"$(osascript -e 'tell application "'$currentApp'" to artist of current track')"
   echo $playerData > /dev/cu.usbmodem0E2198D1
 fi
 ########################################
@@ -21,12 +21,12 @@ do
   elif pgrep -x 'iTunes'  &> /dev/null; then
     currentApp="iTunes"
   fi
-  if [ ${currentApp} ] 
+  if [ ${currentApp} ]
     then
-    currentSong="$(osascript -e 'tell application "'$currentApp'" to name of current track')"
+    currentSong="$(osascript -e 'tell application "'$currentApp'" to name of current track')"$" ~"$"$(osascript -e 'tell application "'$currentApp'" to artist of current track')"
     if [ "$previousSong" != "$currentSong" ]
     then
-      playerData="$(osascript -e 'tell application "'$currentApp'" to name of current track')"$"~"$"$(osascript -e 'tell application "'$currentApp'" to artist of current track')"
+      playerData="$(osascript -e 'tell application "'$currentApp'" to name of current track')"$" ~"$"$(osascript -e 'tell application "'$currentApp'" to artist of current track')"
       echo $playerData > /dev/cu.usbmodem0E2198D1
       previousSong=$currentSong
     fi

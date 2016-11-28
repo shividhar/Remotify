@@ -64,7 +64,7 @@ do
       osascript -e 'tell application "Spotify" to set shuffling to true'
     elif [ "$currentApp" = "iTunes" ]
     then
-      osascript -e 'tell application "iTunes" to set shuffle of current playlist to 1'
+      osascript -e 'tell application "iTunes" to set shuffle enabled to true'
     fi;;
 
     i) #turn shuffle off
@@ -73,21 +73,11 @@ do
       osascript -e 'tell application "Spotify" to set shuffling to false'
     elif [ "$currentApp" = "iTunes" ]
     then
-      osascript -e 'tell application "iTunes" to set shuffle of current playlist to 0'
+      osascript -e 'tell application "iTunes" to set shuffle enabled to false'
     fi;;
 
     v) #volume
     vol=${STR:1:1}${STR:2:1}
     osascript -e 'tell application "'$currentApp'" to set sound volume to '$vol''
-
-    #shuffle)
-    #shuffleState="$(osascript -e 'tell application "'$currentApp'" to shuffle enabled')"
-    #if [ $shuffleState = "true" ]
-    #then
-    # osascript -e 'tell application "'$currentApp'" to set shuffle enabled to false'
-    #else
-    # osascript -e 'tell application "'$currentApp'" to set shuffle enabled to true'
-    #fi
-    #;;
   esac
 done

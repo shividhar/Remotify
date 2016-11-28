@@ -1,8 +1,4 @@
 #include <delay.h>
-//#include <stdlib.h>
-//#include <OrbitBoosterPackDefs.h>
-//#include <OrbitOled.h>
-//#include <OrbitOledGrph.h>
 #include <FillPat.h>
 #include <LaunchPad.h>
 #include <OrbitBoosterPackDefs.h>
@@ -16,7 +12,6 @@ int previousVolume = -1;
 
 void WireInit();
 void ShakeInit();
-
 void ShakeTick();
 
 void setup()
@@ -30,8 +25,7 @@ void setup()
   OrbitOledSetDrawMode(modOledSet);
 
   WireInit();
-  ShakeInit();
-  //Serial.flush();   
+  ShakeInit();   
 }
 
 void loop()
