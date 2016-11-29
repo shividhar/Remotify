@@ -1,6 +1,6 @@
 uint32_t ulAIN0;
 
-void volumeInitialize()
+void volumeInit()
 {
   SysCtlPeripheralEnable(SYSCTL_PERIPH_ADC0);
   GPIOPinTypeADC(AINPort, AIN);

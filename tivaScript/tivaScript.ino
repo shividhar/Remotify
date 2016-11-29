@@ -17,15 +17,17 @@ void ShakeTick();
 void setup()
 {
   Serial.begin(9600);
-  volumeInitialize();
-  switchInitialize();
-  buttonInitialize();
+  volumeInit();
+  switchInit();
+  buttonInit();
   
   OrbitOledInit();
   OrbitOledSetDrawMode(modOledSet);
 
   WireInit();
-  ShakeInit();   
+  ShakeInit();
+  LEDInit();
+
 }
 
 void loop()
@@ -36,8 +38,7 @@ void loop()
   playpauseButton();
   nextButton();
   previousButton();
-
-  shakeInitialize();
+  shakeShuffler();
   
   if(serialEvent())
   {

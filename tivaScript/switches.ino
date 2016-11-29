@@ -4,7 +4,7 @@ const int switchCount = 2;
 uint32_t switches[switchCount] = {leftSwitch, rightSwitch};
 bool switchState[switchCount];
 
-void switchInitialize()
+void switchInit()
 {
   for(int i = 0; i < switchCount; i++)
     pinMode(switches[i], INPUT);

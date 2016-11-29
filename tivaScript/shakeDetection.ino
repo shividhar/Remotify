@@ -41,18 +41,34 @@ void ShakeTick()
   ShakeAccumulator = sqrt(x*x + y*y + z*z);
 }
 
-void shakeInitialize()
+void LEDInit()
+{
+  GPIOPinTypeGPIOOutput(LED1Port, LED1);
+  GPIOPinTypeGPIOOutput(LED2Port, LED2);
+  GPIOPinTypeGPIOOutput(LED3Port, LED3);
+  GPIOPinTypeGPIOOutput(LED4Port, LED4);
+}
+
+void shakeShuffler()
 {
   ShakeTick();
   if(ShakeIsShaking())
   {
     if(!shuffle)
     {
+      GPIOPinWrite(LED1Port, LED1, LED1);
+      GPIOPinWrite(LED2Port, LED2, LED2);
+      GPIOPinWrite(LED3Port, LED3, LED3);
+      GPIOPinWrite(LED4Port, LED4, LED4);
       Serial.println('h'); //shuffleOn
       shuffle = true;
     }
     else
     {
+      GPIOPinWrite(LED1Port, LED1, LOW);
+      GPIOPinWrite(LED2Port, LED2, LOW);
+      GPIOPinWrite(LED3Port, LED3, LOW);
+      GPIOPinWrite(LED4Port, LED4, LOW);
       Serial.println('i');  //shuffleOff
       shuffle = false;
     }

@@ -13,7 +13,7 @@ struct buttonState
 
 struct buttonState buttonStates[buttonCount];
 
-void buttonInitialize()
+void buttonInit()
 {
   for(int i = 0; i < buttonCount; i++)
     pinMode(buttons[i], INPUT);
